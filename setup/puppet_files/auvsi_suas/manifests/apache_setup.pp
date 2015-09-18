@@ -7,6 +7,7 @@ class auvsi_suas::apache_setup {
 
     # Install additional utils and modules
     $package_deps = [
+        "apache2.2-bin",
         "apache2-utils",
         "libapache2-mod-auth-pgsql",
         "libapache2-mod-auth-plain",
@@ -21,6 +22,9 @@ class auvsi_suas::apache_setup {
     class { 'apache':
         default_vhost => false,
         service_ensure => running,
+        apache_version => '2.2',
+        mpm_module => 'worker',
+        require => Package['apache2-mpm-worker'],
     }
 
     # Configure the python path
@@ -41,6 +45,25 @@ class auvsi_suas::apache_setup {
     file { '/etc/apache2/conf.d/limit_upload.conf' :
         content => "LimitRequestBody 1048576",
     }
+
+    file { '/etc/apache2/mods-enabled/worker.load':
+        content => "LoadModule mpm_worker_module /usr/lib/apache2/modules/mod_mpm_worker.so",
+    }
+    file { '/etc/apache2/mods-enabled/authz_core1.load':
+        content => "LoadModule authz_core_module /usr/lib/apache2/modules/mod_authz_core.so",
+    }
+    file { '/etc/apache2/mods-enabled/authz_host1.load':
+        content => "LoadModule authz_host_module /usr/lib/apache2/modules/mod_authz_host.so",
+    }
+   #file { '/etc/apache2/mods-enabled/dir1.load':
+   #    content => "LoadModule dir_module /usr/lib/apache2/modules/mod_dir.so",
+   #}
+   #file { '/etc/apache2/mods-enabled/alias1.load':
+   #    content => "LoadModule alias_module /usr/lib/apache2/modules/mod_alias.so",
+   #}
+   #file { '/etc/apache2/mods-enabled/mime1.load':
+   #    content => "LoadModule mime_module /usr/lib/apache2/modules/mod_mime.so",
+   #}
 
     # Configure production via WSGI
     apache::vhost { 'interop_server':

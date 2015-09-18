@@ -1,7 +1,7 @@
 AUVSI SUAS Interoperability
 ===========================
 
-[![Documentation](https://readthedocs.org/projects/auvsi-suas-competition-interoperability-system/badge/?version=latest)](http://auvsi-suas-competition-interoperability-system.readthedocs.org/en/latest/?badge=latest)
+[![Documentation](https://readthedocs.org/projects/auvsi-suas-competition-interoperability-system/badge/?version=latest)](http://auvsi-suas-competition-interoperability-system.readthedocs.org/en/latest/?badge=latest) [![Build Status](https://travis-ci.org/auvsi-suas/interop.svg)](https://travis-ci.org/auvsi-suas/interop)
 
 This is the repository for the Association for Unmanned Vehicle Systems
 International (AUVSI) Student Unmanned Aerial System (SUAS) Competition. It

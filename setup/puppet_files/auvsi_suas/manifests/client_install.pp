@@ -16,7 +16,7 @@ class auvsi_suas::client_install {
     # Python 3 virtualenv
     python::virtualenv { '/interop/client/venv3' :
         ensure => 'present',
-        version => '3.4',
+        version => '3.2',
         requirements => '/interop/client/requirements.txt',
     }
 

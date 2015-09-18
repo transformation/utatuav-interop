@@ -11,7 +11,7 @@ class auvsi_suas::server_install {
         'python-scipy',
         'python-matplotlib',
         'python-psycopg2',
-        'npm',
+        #'npm',
     ]
     package { $package_deps:
         ensure => 'latest',
@@ -28,17 +28,34 @@ class auvsi_suas::server_install {
                      Package['python-matplotlib'], Package['python-psycopg2'] ]
     }
 
+    class { 'nodejs': }
+
     # Link NodeJS (installed as nodejs) so that Karma can use it as node.
     file { '/usr/local/bin/node':
         ensure => 'link',
         target => '/usr/bin/nodejs',
-        require => Package['npm'],
+        require => Class['nodejs'],
     }
+
+    $npm_deps = [
+        'karma',
+        'karma-jasmine',
+        'karma-chrome-launcher',
+        'phantomjs',
+        'karma-phantomjs-launcher',
+        #'karma-cli',
+    ]
+    package { $npm_deps:
+        ensure => 'present',
+        provider => 'npm',
+        require => File['/usr/local/bin/node'],
+    }
+
     # Install packages from NPM.
-    exec { 'karma and jasmine':
-        environment => ['HOME=/interop'],
-        command => 'npm install --force -g karma karma-jasmine karma-chrome-launcher phantomjs karma-phantomjs-launcher karma-cli',
-        cwd => '/interop/server',
-        require => [Package['npm'], File['/usr/local/bin/node']],
-    }
+    #exec { 'karma and jasmine':
+    #    environment => ['HOME=/interop'],
+    #    command => 'npm install --force -g karma karma-jasmine karma-chrome-launcher phantomjs karma-phantomjs-launcher karma-cli',
+    #    cwd => '/interop/server',
+    #    require => Exec['upgrade node'],
+    #}
 }

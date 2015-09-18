@@ -25,11 +25,11 @@ class auvsi_suas::postgresql_setup {
     # Define settings which impact performance.
     # Give the database server more memory. Should be ~1/4 of total memory.
     postgresql::server::config_entry { 'shared_buffers':
-        value => '1024MB',
+        value => '24MB',
     }
     # The effective size between server and OS. Should be ~1/2 of total memory.
     postgresql::server::config_entry { 'effective_cache_size':
-        value => '2048MB',
+        value => '1024MB',
     }
     # The number of segments (16MB) before an expensive checkpoint.
     # Increasing optimizes for write performance, decreasing for recovery time.
