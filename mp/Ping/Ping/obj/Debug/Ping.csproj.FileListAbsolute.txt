@@ -1,0 +1,1 @@
+c:\jesse\utat\missionplanner\plugin\utatuav-interop\mp\Ping\Ping\bin\Debug\Ping.exe.config
